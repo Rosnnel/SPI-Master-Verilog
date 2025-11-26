@@ -1,0 +1,75 @@
+CERN Open Hardware Licence Version 2 - Strongly Reciprocal
+
+Copyright (C) 2025 Rosnnel Moncada
+
+Preamble
+
+CERN has developed this licence to promote collaboration among hardware designers
+and to provide a legal framework that supports the free use, study, modification,
+and sharing of hardware designs and documentation.
+
+The CERN-OHL-S is a strongly reciprocal licence that ensures that any distributed
+modifications or derivatives of this design must remain open under the same terms.
+
+1. Definitions
+
+'Licence' means this CERN Open Hardware Licence Version 2 - Strongly Reciprocal.
+
+'Documentation' means schematic diagrams, HDL code (such as Verilog, VHDL, SystemVerilog),
+PCB layouts, mechanical drawings, simulations, and any other information that
+describes the hardware design.
+
+'Product' means any device or physical object manufactured based on the Documentation.
+
+'Licensee' means any person or legal entity exercising rights under this Licence.
+
+2. Grant of Licence
+
+CERN grants you a worldwide, royalty-free, non-exclusive licence to use, copy,
+study, modify, and distribute the Documentation, and to manufacture or distribute
+Products based on it, under the conditions described in this Licence.
+
+3. Conditions
+
+a. Any distribution of modified Documentation or Products must:
+   - Be released under this same licence (CERN-OHL-S-2.0),
+   - Clearly indicate the changes made,
+   - Attribute credit to the original author(s).
+
+b. You may not impose any additional restrictions beyond those in this Licence.
+
+c. You must keep all copyright, licence and attribution notices intact.
+
+4. Warranty and Liability
+
+The Documentation and any Products are provided "as is", without warranty of any kind,
+express or implied, including but not limited to warranties of merchantability,
+fitness for a particular purpose, or non-infringement.
+
+In no event shall the Licensor be liable for any claim, damages or other liability,
+whether in an action of contract, tort or otherwise, arising from or in connection
+with the Documentation or the use thereof.
+
+5. Termination
+
+If you breach the terms of this Licence, your rights under it will terminate automatically.
+You may reinstate your rights by remedying the violation within 30 days of becoming
+aware of it.
+
+6. Versioning
+
+CERN may publish revised versions of the CERN Open Hardware Licence. You may choose
+to continue using this version or adopt a later one.
+
+7. Notices
+
+Include the following in each file covered by this licence:
+
+    SPDX-License-Identifier: CERN-OHL-S-2.0
+    © 2025 Rosnnel Moncada
+
+For more information, see: https://ohwr.org/project/cernohl
+
+---
+
+This project is licensed under the CERN Open Hardware Licence v2 - Strongly Reciprocal.
