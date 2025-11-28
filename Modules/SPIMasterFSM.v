@@ -38,8 +38,10 @@ TxBusy,SS,RxBusy,TristateMode,SCLKEdgeFlg);
             FBS0:
                 if(~SPIGo)
                     NS= idle;
-                else
+                else if (SCLKEdgeFlg)
                     NS = FBS1;
+                else
+                    NS = FBS0;
             FBS1:
                 if(WordFlg)
                     NS = FBS0;
@@ -89,10 +91,10 @@ TxBusy,SS,RxBusy,TristateMode,SCLKEdgeFlg);
                 EnCounter = 1'b1;
                 LoadPISO = 1'b1;
                 EnPISO = 1'b1;
-                EnSIPO = 1'b0;
+                EnSIPO = 1'b1;
                 EnReceivedReg = 1'b1;
-                TxBusy = 1'b1;
-                RxBusy = 1'b1;
+                TxBusy = 1'b0;
+                RxBusy = 1'b0;
                 SS = 1'b0;
                 TristateMode = 1'b1;
             end
