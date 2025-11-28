@@ -1,11 +1,11 @@
 # Generic Master SPI Module
 
 This repository contains all the infromation related to my IP implementation and description of a Generic SPI Master module that can work and be reprogrammed "on-the-fly", allowing to change parameters like 
-CPOL, CPHA, Endianess and the possibility to change the operation mode beteween Half-bridge and Full-bridge communication.
+CPOL, CPHA, BitOrdering and the possibility to change the operation mode beteween Half-bridge and Full-bridge communication.
 
-The Serial Peripheral Interface modukle allows to transfer data quickly between different chips by selecting an slave through a inverted Slave Select - *SS* signal and generating a synchronizer 
+The Serial Peripheral Interface module allows to transfer data quickly between different chips by selecting an slave through a inverted Slave Select - *SS* signal and generating a synchronizer 
 SPI CLOCK - SCLK signal, that tells both the sender and receiver when to sample and shift data based on the CPOL and CPHA configuration signals, the data is shifted and sampled by the MOSI and MISO ports,
-the bit ordering can be changed through the Endianess bit, performing Little-Endian when Endianess = 0 and Big-Endian when Endianess = 1. 
+the bit ordering can be changed through the Endianess bit, performing MSBfirst when BitOrder = 0 and LSBfirst when BitOrder = 1. 
 The SPIGo signal tells the module to start the communication between the master and the slave and their functionality vary between the Full-Bridge and Half-bridge modes, alternating the MOSI Bus for TX and RX when 
 HalfBridge mode and using both the MOSI and MISO for the FUll Bridge Mode.  
 
@@ -19,9 +19,10 @@ The module is conformed by the folllowing submodules:
 - FSM That accomplishes the communication protocol, activating each of the mentioned modules depending on the current state and activation signals. The FSM also asserts the SS signal and generates RxBusy and TxBusy signalas to indicate the user that
 - theres a transaction.
 
+In order to represent a real case module usage, it will be used a wordlength of 8 bits, and a 2MHz SCLK frequency.
 Next is shown the RTL Representation of the proposed Generic Master SPI module:
 
-<img width="893" height="925" alt="SPI Master" src="https://github.com/user-attachments/assets/0d54faa7-6623-4648-b456-90ca702b9d69" />
+<img width="829" height="820" alt="Jo" src="https://github.com/user-attachments/assets/0bde17d7-e988-49d4-a559-d53642d856ec" />
 
 Next is shown the State Diagram that uses the FSM to control the module:
 
@@ -35,14 +36,14 @@ Next is shown the Output signals for each state:
 
 The described submodules with the corresponding GenericMasterSPI top module will generate the following RTL module, this representation was obtained using Vivado Design Suite:
 
-<img width="1567" height="688" alt="RTL" src="https://github.com/user-attachments/assets/9e68c983-aa39-4bcc-af8c-7ba269d8c998" />
+<img width="1555" height="668" alt="image" src="https://github.com/user-attachments/assets/b46bb3ed-d689-4eb0-866e-57e582a6b5cc" />
 
 The attached Testbench works in two ways. Setting the SPIMode = 0 and commenting the lines 19 and 41 for full bridge test. setting SPIMode = 1 and commenting the 40 line triggers the HB simulation. 
 
 To analyze the Full-bridge implementation, it can be seen how the MOSI nad MISO signals generates 
 the desired input values in a serial way, this behaviour can be seen in the next image:
 
-<img width="1492" height="382" alt="FB" src="https://github.com/user-attachments/assets/8973916d-9858-4d9b-91a9-175345e4e7bc" />
+<img width="1515" height="383" alt="image" src="https://github.com/user-attachments/assets/077d9b66-58eb-4a9d-9f78-9fa5674245e9" />
 
 Next is shwon the Half-Bidge Simulation, it is needed to keep in mind that it isn't possible to see all the expected behaviour of a tristate bus in Verilog HDL becuase of the asserted Z State of the tristate bus: 
 
@@ -54,10 +55,13 @@ By the way uncommenting the line 19 and 41 will forcely drive data to the MOSI B
 
 Another specs that can be provided is the resource consumption, power consumption and max system frequency in an Arty S7 FPGA Development board, achieving the following results:
 
-<img width="607" height="81" alt="Utilization" src="https://github.com/user-attachments/assets/bc23c8ee-24a6-4aaf-9b57-92f6790747b1" />
-<img width="400" height="242" alt="image" src="https://github.com/user-attachments/assets/ff1d07ad-c125-494e-bbf2-d1f8652238a2" />
-<img width="404" height="64" alt="image" src="https://github.com/user-attachments/assets/a6ed3677-49cb-486c-aa4d-519e3ed17174" />
-<img width="1012" height="203" alt="image" src="https://github.com/user-attachments/assets/941fe6c1-ba35-4e39-a640-04fedc86de24" />
+<img width="388" height="56" alt="image" src="https://github.com/user-attachments/assets/362180fd-5809-4b74-abf1-236d3eb5dbb4" />
+<img width="1016" height="200" alt="image" src="https://github.com/user-attachments/assets/93dcf45d-75f8-4f6a-bbc7-6d0672e248b2" />
+<img width="412" height="271" alt="image" src="https://github.com/user-attachments/assets/e65c7106-7a5e-4ef4-aee5-eb6ff68e10b8" />
+<img width="667" height="282" alt="image" src="https://github.com/user-attachments/assets/0004706d-1e5b-4573-8ea4-3846c8acfc70" />
+
+
+
 
 ------------------------------
 
