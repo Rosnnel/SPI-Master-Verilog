@@ -2,10 +2,10 @@
 // © 2025 Rosnnel Moncada
 
 module PISOZReg #(parameter WordLen=8)
-(clk,SCLKEdgeFlg,EnPISO,LoadPISO,WordFlg,TristateMode,Endiannes,DataIN,MOSI,HBReceviedData);
+(clk,SCLKEdgeFlg,EnPISO,LoadPISO,WordFlg,TristateMode,BitOrder,DataIN,MOSI,HBReceviedData);
 
     input TristateMode;
-    input clk,SCLKEdgeFlg,EnPISO,LoadPISO,WordFlg,Endiannes;
+    input clk,SCLKEdgeFlg,EnPISO,LoadPISO,WordFlg,BitOrder;
     input [WordLen-1:0] DataIN;
     output [WordLen-1:0]HBReceviedData;
     inout MOSI;
@@ -22,7 +22,7 @@ module PISOZReg #(parameter WordLen=8)
                     TXReg <= DataIN;
                 else if(SCLKEdgeFlg && ~WordFlg)
                 begin
-                    if(~Endiannes)      //Little Endian
+                    if(BitOrder)      //Little Endian
                         TXReg <= {1'b0,TXReg[WordLen-1:1]};
                     else                //Big Endian
                         TXReg <= {TXReg[WordLen-2:0],1'b0};
@@ -32,7 +32,7 @@ module PISOZReg #(parameter WordLen=8)
             begin
                 if(SCLKEdgeFlg && ~WordFlg)
                 begin
-                    if(~Endiannes)      //Little Endian
+                    if(~BitOrder)      //Little Endian
                         RXReg <= {MOSI,RXReg[WordLen-1:1]};
                     else                //Big Endian
                         RXReg <= {RXReg[WordLen-2:0],MOSI};
@@ -41,7 +41,7 @@ module PISOZReg #(parameter WordLen=8)
         end
     end
 
-    assign MOSI = (TristateMode) ? ((~Endiannes) ? TXReg[0] : TXReg[WordLen-1]) : 1'bz;
+    assign MOSI = (TristateMode) ? ((BitOrder) ? TXReg[0] : TXReg[WordLen-1]) : 1'bz;
     assign HBReceviedData = RXReg;
 
 endmodule

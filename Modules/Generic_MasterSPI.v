@@ -3,9 +3,9 @@
 
 module Generic_MasterSPI #(parameter SysClk = 100000000, SPIClkFreq = 2000000, WordLen = 8)
 (clk,reset,CPOL,CPHA,SPIGo,SPIMode,RxBusy,SS,TxBusy,SendData,MOSI,ReceivedData,
-MISO,Endianess,WordFlg,SCLK);
+MISO,BitOrder,WordFlg,SCLK);
 
-    input clk,reset,CPOL,CPHA,SPIGo,SPIMode,MISO,Endianess;
+    input clk,reset,CPOL,CPHA,SPIGo,SPIMode,MISO,BitOrder;
     input [WordLen-1:0] SendData;
     inout MOSI;
     output RxBusy,SS,TxBusy,WordFlg,SCLK;
@@ -20,7 +20,7 @@ MISO,Endianess,WordFlg,SCLK);
             CPOLR <= CPOL;
             CPHAR <= CPHA;
             SPIModeR <= SPIMode;
-            EndianessR <= Endianess;
+            EndianessR <= BitOrder;
         end
     end
 
@@ -43,12 +43,12 @@ MISO,Endianess,WordFlg,SCLK);
     wire [WordLen-1:0] HBReceivedData;
     PISOZReg #(.WordLen(WordLen)) PISOZReg
     (.clk(clk),.SCLKEdgeFlg(SCLKEdgeFlg),.EnPISO(EnPISO),.LoadPISO(LoadPISO),
-    .WordFlg(WordFlg),.TristateMode(TristateMode),.Endiannes(EndianessR),.DataIN(SendData),
+    .WordFlg(WordFlg),.TristateMode(TristateMode),.BitOrder(EndianessR),.DataIN(SendData),
     .MOSI(MOSI),.HBReceviedData(HBReceivedData));
 
     wire [WordLen-1:0] FBReceivedData;
     SIPOReg #(.WordLen(WordLen)) SIPOReg
-    (.clk(clk),.SCLKEdgeFlg(SCLKEdgeFlg),.EnSIPO(EnSIPO),.Endiannes(EndianessR),.MISO(MISO),
+    (.clk(clk),.SCLKEdgeFlg(SCLKEdgeFlg),.EnSIPO(EnSIPO),.BitOrder(EndianessR),.MISO(MISO),
     .ReceivedData(FBReceivedData));
 
     reg [WordLen-1:0] ReceivedDataC;
